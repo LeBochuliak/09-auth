@@ -16,8 +16,11 @@ export default function PublicLayout({ children }: Props) {
 
   useEffect(() => {
     router.refresh();
-    setLoading(false);
   }, [router]);
+
+  useEffect(() => {
+    setLoading(false);
+  }, []);
 
   return (
     <>
