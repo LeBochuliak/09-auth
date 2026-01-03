@@ -65,6 +65,7 @@ export default function NoteForm() {
     onSuccess: () => {
       clearDraft();
       queryClient.invalidateQueries({ queryKey: ["notes"] });
+      router.back();
     },
   });
 
@@ -90,8 +91,6 @@ export default function NoteForm() {
         createdAt,
         updatedAt,
       });
-
-      router.back();
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         const newErrors: FormErrors = {};
