@@ -50,8 +50,12 @@ export async function proxy(request: NextRequest) {
   const accessToken = cookieStore.get('accessToken')?.value;
   const refreshToken = cookieStore.get('refreshToken')?.value;
 
-  const isPublicRoute = publicRoutes.some((route) => pathname.startsWith(route));
-  const isPrivateRoute = privateRoutes.some((route) => pathname.startsWith(route));
+  const isPublicRoute = publicRoutes.some(route =>
+    pathname === route || pathname.startsWith(route + '/')
+  );
+  const isPrivateRoute = privateRoutes.some(route =>
+    pathname === route || pathname.startsWith(route + '/')
+  );
 
   if (!accessToken) {
     if (refreshToken) {
@@ -139,7 +143,7 @@ export async function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
-  return NextResponse.redirect(new URL('/', request.url));
+  return NextResponse.next();
 
 }
 
